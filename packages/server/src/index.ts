@@ -1,37 +1,22 @@
+import cors from "cors";
+import "dotenv/config";
 import express, { Application } from "express";
-import { ApolloServer, Config, gql } from "apollo-server-express";
-import { IResolvers } from "@graphql-tools/utils";
+import { graphqlHTTP } from "express-graphql";
+import schema from "./schema/schema";
 
-const typeDefs = gql`
-  type Query {
-    message: String!
-  }
-`;
+const PORT = process.env.PORT || 8080;
+const app: Application = express();
 
-const resolvers: IResolvers = {
-  Query: {
-    message: () => "It works!",
-  },
-};
+app.use(cors());
 
-const config: Config = {
-  typeDefs: typeDefs,
-  resolvers: resolvers,
-};
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema,
+    graphiql: process.env.NODE_ENV === "development",
+  })
+);
 
-async function startApolloServer(config: Config) {
-  const PORT = 8080;
-  const app: Application = express();
-  const server: ApolloServer = new ApolloServer(config);
-  await server.start();
-
-  server.applyMiddleware({
-    app,
-    path: "/graphql",
-  });
-
-  app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-  });
-}
-startApolloServer(config);
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
+});
