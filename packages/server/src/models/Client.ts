@@ -20,7 +20,6 @@ const ClientSchema = new mongoose.Schema({
   },
 });
 
-// Definir el modelo del cliente
 const Client: Model<IClient> = mongoose.model<IClient>("Client", ClientSchema);
 
 export default Client;
