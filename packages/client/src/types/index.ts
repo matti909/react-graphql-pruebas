@@ -4,3 +4,11 @@ export interface Client {
   email: string;
   phone: string;
 }
+
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  client: Client;
+}
