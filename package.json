@@ -2,8 +2,10 @@
   "name": "root",
   "private": true,
   "devDependencies": {
-    "lerna": "^8.1.2",
-    "ts-node-dev": "^2.0.0"
+    "lerna": "^8.1.2"
   },
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "workspaces": [
+    "./packages/*"
+  ]
 }
